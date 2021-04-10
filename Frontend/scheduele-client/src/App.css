@@ -1,38 +1,356 @@
-.App {
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
+.icon {
+  font-family: 'Material Icons', serif;
+  font-style: normal;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+}
+
+
+/* VARIABLES */
+
+:root {
+  --main-color: #1a8fff;
+  --text-color: #777;
+  --text-color-light: #ccc;
+  --border-color: #eee;
+  --bg-color: #f9f9f9;
+  --neutral-color: #fff;
+}
+
+
+/* GENERAL */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-size: 1em;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--text-color);
+    background: var(--bg-color);
+    position: relative;
+}
+
+header {
+  display: block;
+  width: 100%;
+  padding: 1.75em 0;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--neutral-color);
+}
+
+header #logo {
+  font-size: 175%;
+  text-align: center;
+  color: var(--main-color);
+  line-height: 1;
+}
+
+header #logo .icon {
+  padding-right: .25em;
+}
+
+main {
+  display: block;
+  margin: 0 auto;
+  margin-top: 5em;
+  max-width: 50em;
+}
+
+
+/* GRID */
+
+.row {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.row-middle {
+  align-items: center;
+}
+
+.col {
+  flex-grow: 1;
+  flex-basis: 0;
+  max-width: 100%;
+}
+
+.col-start {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.col-center {
+  justify-content: center;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
+.col-end {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+
+/* Calendar */
+
+.calendar {
+  display: block;
+  position: relative;
+  width: 100%;
+  background: var(--neutral-color);
+  border: 1px solid var(--border-color);
+}
+
+.calendar .header {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 115%;
+  padding: 1.5em 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.calendar .header .icon {
+  cursor: pointer;
+  transition: .15s ease-out;
+}
+
+.calendar .header .icon:hover {
+  transform: scale(1.75);
+  transition: .25s ease-out;
+  color: var(--main-color);
+}
+
+.calendar .header .icon:first-of-type {
+  margin-left: 1em;
+}
+
+.calendar .header .icon:last-of-type {
+  margin-right: 1em;
+}
+
+.calendar .days {
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--text-color-light);
+  font-size: 70%;
+  padding: .75em 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.calendar .body .cell {
+  position: relative;
+  height: 5em;
+  border-right: 1px solid var(--border-color);
+  cursor: pointer;
+  background: var(--neutral-color);
+  transition: 0.25s ease-out;
+}
+
+.VerticalFlow{
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.VerticalFlow::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.VerticalFlow::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.VerticalFlow::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.VerticalFlow::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+.calendar .body .cell:hover {
+  background: var(--bg-color);
+  transition: 0.5s ease-out;
+}
+
+.calendar .body .selected {
+  border-left: 10px solid transparent;
+  border-image: linear-gradient(45deg, #1a8fff 0%,#53cbf1 40%);
+  border-image-slice: 1;
+}
+
+.calendar .body .row {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.calendar .body .row:last-child {
+  border-bottom: none;
+}
+
+.calendar .body .cell:last-child {
+  border-right: none;
+}
+
+.calendar .body .cell .number {
+  position: absolute;
+  font-size: 82.5%;
+  line-height: 1;
+  top: .75em;
+  right: .75em;
+  font-weight: 700;
+}
+
+.calendar .body .disabled {
+  color: var(--text-color-light);
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.calendar .body .cell .bg {
+  font-weight: 700;
+  line-height: 1;
+  color: var(--main-color);
+  opacity: 0;
+  font-size: 8em;
+  position: absolute;
+  top: -.2em;
+  right: -.05em;
+  transition: .25s ease-out;
+  letter-spacing: -.07em;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.calendar .body .cell:hover .bg, .calendar .body .selected .bg  {
+  opacity: 0.05;
+  transition: .5s ease-in;
 }
 
-.App-link {
-  color: #61dafb;
+.calendar .body .col {
+  flex-grow: 0;
+  flex-basis: calc(100%/7);
+  width: calc(100%/7);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+/*RemiderDiv css*/
+
+.ReminderDivMask{
+    position: absolute;
+    z-index:5;
+    left: 0;
+    top: 0;
+    height:100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.ReminderDiv{
+  background: white;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  padding: 2rem;
+  border-radius: 5px;
+  color: black;
+  overflow-y: scroll ;
+  height: 75vh;
+}
+
+
+.FormDiv{
+  margin:1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+
+.formTextInput{
+     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      font-size:1rem;
+      width: 100%;
+      border-radius:5px;
+}
+
+.formButton{
+    color: white;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 0.5rem;
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #1a8fff;
+}
+
+.formButton:hover{
+
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
+
+}
+
+
+.CrossButton{
+  color: red;
+  font-size:1rem;
+  text-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+
+.ListStyle{
+  list-style:none;
+}
+
+.ListText{
+  font-size: 0.8rem;
+}
+
+.ListCircleGreen{
+  color: green;
+}
+
+.ListCircleRed{
+  color: red;
+}
+
+/*Table */
+
+.TableDiv{
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+.TableDiv th{
+  text-align: left;
+  padding: 8px;
+}
+
+.TableDiv td{
+  text-align: left;
+  padding: 8px;
+}
+
+.TableDiv tr:nth-child(even){background-color: #f2f2f2}
