@@ -51,3 +51,17 @@ ___
 
 5. You can use `dotnet run` or Visual Studio IDE to run the project
 
+6. In `Startup.cs` under 'Configure' method  in `app.UseCors` . Paste the URL where Frontend is hosted
+
+```C#
+
+app.UseCors(builder =>
+            {
+                builder.WithOrigins(" URL HERE ")
+                .AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+            });
+            
+
+```
+default is `http://localhost:3000`
+
